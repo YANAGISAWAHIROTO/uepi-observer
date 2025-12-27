@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>UEPI 研究員応募端末</title>
+<title>UEPI 研究員応募フォーム</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body {
@@ -10,37 +10,89 @@ body {
   padding:0;
   background:#0b0c17;
   color:#cfd8ff;
-  font-family:sans-serif;
+  font-family:'Segoe UI', sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
 }
 .container {
-  max-width:600px;
-  margin:40px auto;
   background: rgba(10,10,40,0.9);
   padding:30px;
-  border-radius:10px;
-  box-shadow:0 0 20px #223366;
+  border-radius:15px;
+  box-shadow:0 0 30px #223366;
+  max-width:400px;
+  width:90%;
+  text-align:center;
 }
-h1 { text-align:center; color:#7fbfff; }
-iframe {
+h1 {
+  color:#7fbfff;
+  margin-bottom:20px;
+}
+label {
+  display:block;
+  text-align:left;
+  margin-top:15px;
+  font-weight:bold;
+}
+input, select {
   width:100%;
-  height:1500px; /* フォームに合わせて調整可能 */
-  border:1px solid #3a4a7a;
+  padding:10px;
+  margin-top:5px;
   border-radius:5px;
-  margin-top:20px;
+  border:1px solid #3a4a7a;
+  background:#020b1c;
+  color:#cfd8ff;
+  font-size:14px;
 }
+button {
+  margin-top:20px;
+  width:100%;
+  padding:12px;
+  font-size:16px;
+  background:#4a6b5f;
+  color:white;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+}
+button:hover { background:#6aa080; }
 </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>UEPI 研究員応募端末</h1>
-  <p>下記フォームに必要事項を入力してください。命の危険等は保証できません。</p>
+  <h1>UEPI 研究員応募フォーム</h1>
 
-  <!-- Googleフォーム埋め込み -->
-  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeOa9Owq-VueF3mYhWNONxTjdV3YGr5H3kp91z_yTOlM6a_cw/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">
-    読み込んでいます…
-  </iframe>
+  <label>氏名</label>
+  <input type="text" id="name" placeholder="例：山田太郎">
+
+  <label>研究員ランク</label>
+  <select id="rank">
+    <option value="">選択してください</option>
+    <option value="初級">初級</option>
+    <option value="中級">中級</option>
+    <option value="上級">上級</option>
+  </select>
+
+  <button onclick="submitForm()">応募</button>
 </div>
+
+<script>
+function submitForm(){
+  const name = document.getElementById("name").value.trim();
+  const rank = document.getElementById("rank").value;
+
+  if(!name || !rank){
+    alert("氏名とランクを入力してください。");
+    return;
+  }
+
+  // permit.html に名前とランクを渡す
+  const url = `permit.html?name=${encodeURIComponent(name)}&rank=${encodeURIComponent(rank)}`;
+  window.location.href = url;
+}
+</script>
 
 </body>
 </html>
