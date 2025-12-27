@@ -2,13 +2,13 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>観測データ入力端末</title>
+<title>Restricted Observation Survey</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body {
   margin:0;
   padding:0;
-  background: radial-gradient(circle at center, #0b0c17, #000010);
+  background:#0b0c17;
   color:#cfd8ff;
   font-family:'Segoe UI', sans-serif;
   display:flex;
@@ -17,42 +17,48 @@ body {
   min-height:100vh;
 }
 .container {
-  background: rgba(0,0,40,0.75);
-  padding:35px;
-  border-radius:18px;
+  background: rgba(10,10,40,0.9);
+  padding:30px;
+  border-radius:15px;
   box-shadow:0 0 30px #223366;
-  max-width:600px;
-  width:90%;
+  max-width:760px;
+  width:95%;
   text-align:center;
 }
 h1 {
-  color:#9fc7ff;
-  margin-bottom:15px;
+  color:#8fbfff;
+  margin-bottom:10px;
 }
 p {
   font-size:14px;
-  line-height:1.8;
-  color:#cfd8ff;
+  opacity:0.85;
 }
-.notice {
-  margin-top:15px;
-  font-size:12px;
-  color:#aab;
+iframe {
+  width:100%;
+  height:1400px;
+  border:1px solid #3a4a7a;
+  border-radius:6px;
+  margin-top:20px;
 }
-a.formlink {
-  display:inline-block;
-  margin-top:25px;
-  padding:14px 26px;
-  background:#4a6b5f;
-  color:white;
-  border-radius:8px;
-  text-decoration:none;
-  font-size:16px;
-  box-shadow:0 0 10px rgba(0,0,0,0.5);
-}
-a.formlink:hover {
-  background:#6aa080;
-}
-.footer {
-  margin-top:25px;
-  font-size:
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Extended Observation Survey</h1>
+  <p>
+    以下の調査は特定条件下でのみ使用されます。<br>
+    正確に回答してください。
+  </p>
+
+  <iframe
+    src="https://docs.google.com/forms/d/e/1FAIpQLSeOa9Owq-VueF3mYhWNONxTjdV3YGr5H3kp91z_yTOlM6a_cw/viewform?embedded=true"
+    frameborder="0"
+    marginheight="0"
+    marginwidth="0">
+    読み込んでいます…
+  </iframe>
+</div>
+
+</body>
+</html>
