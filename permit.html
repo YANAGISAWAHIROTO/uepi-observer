@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>UEPI 研究員許可証</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  margin:0;
+  padding:0;
+  background:#0b0c17;
+  font-family:'Segoe UI', sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+.card {
+  background: rgba(20,20,50,0.95);
+  padding:40px;
+  border-radius:20px;
+  box-shadow:0 0 30px #223366;
+  max-width:500px;
+  width:90%;
+  text-align:center;
+  color:#cfd8ff;
+}
+h1 { color:#7fbfff; margin-bottom:10px; }
+h2 { color:#aaffaa; margin-top:5px; font-weight:normal; }
+p { margin:15px 0; line-height:1.5; }
+.signature { margin-top:30px; font-style:italic; color:#8888ff; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>UEPI 研究員許可証</h1>
+  <h2>Unidentified Environmental Phenomena Institute</h2>
+
+  <p>この許可証は、以下の者がUEPI研究員として認定され、怪異現象の観測及び調査に従事することを許可するものです。</p>
+
+  <p><strong>氏名：</strong><span id="dispName"></span></p>
+  <p><strong>研究員ランク：</strong><span id="dispRank"></span></p>
+  <p><strong>発行日：</strong><span id="dispDate"></span></p>
+
+  <p>注意：任務に伴う危険は自己責任です。UEPIは安全を保証しません。</p>
+
+  <div class="signature">UEPI 総合管理局</div>
+</div>
+
+<script>
+// URLパラメータを取得
+const params = new URLSearchParams(window.location.search);
+const name = params.get('name') || '名無し';
+const rank = params.get('rank') || '初級';
+const today = new Date();
+const dateStr = `${today.getFullYear()}年${today.getMonth()+1}月${today.getDate()}日`;
+
+// 表示
+document.getElementById('dispName').textContent = name;
+document.getElementById('dispRank').textContent = rank;
+document.getElementById('dispDate').textContent = dateStr;
+</script>
+
+</body>
+    </html>
