@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>Stellar Observation Log</title>
+<title>Stellar Observation Network</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body {
@@ -73,40 +73,14 @@ button:hover {
 <body>
 
 <div class="container">
-  <h1>Stellar Observation Log</h1>
+  <h1>Stellar Observation Network</h1>
 
   <p>
-    現在、天体観測データの同期が不安定です。<br>
-    復旧作業が完了するまで、しばらくお待ちください。
+    現在、観測ログの同期が不安定です。<br>
+    復旧が完了するまで、しばらくお待ちください。
   </p>
 
   <input type="text" id="key" placeholder="同期キーを入力">
 
   <br>
   <button onclick="checkKey()">再同期</button>
-
-  <div class="notice">
-    ※ 一部の利用者のみ追加ログにアクセスできます
-  </div>
-
-  <div class="footer">
-    Network Status: degraded / retry available
-  </div>
-</div>
-
-<script>
-function checkKey(){
-  const key = document.getElementById("key").value.trim();
-
-  if(key === "UEPISTELLAR-LOG"){
-    // ▼ 応募ページ（stellar.html）への絶対URL
-    window.location.href =
-      "https://yanagisawahiroto.github.io/uepi-observerF/stellar.html";
-  } else {
-    alert("同期に失敗しました。入力内容を確認してください。");
-  }
-}
-</script>
-
-</body>
-</html>
