@@ -16,6 +16,7 @@ body {
   align-items:center;
   justify-content:center;
   height:100vh;
+  transition: background 0.2s;
 }
 .container {
   background: rgba(0,0,40,0.7);
@@ -59,7 +60,13 @@ button:hover { background:#6aa080; }
 function checkPass() {
   const code = document.getElementById('passcode').value.trim();
   if(code === 'UEPISTELLAR-LOG') {
-    window.location.href = 'index.html'; // 合言葉が正しければ応募フォームへ
+    // 光ノイズ演出
+    document.body.style.background = "#ffffff";
+    setTimeout(() => {
+      document.body.style.background = "radial-gradient(circle at center, #0b0c17, #000010)";
+      // 応募フォームへ移動
+      window.location.href = 'index.html';
+    }, 150); // 150ms 光る
   } else {
     alert('合言葉が間違っています');
   }
