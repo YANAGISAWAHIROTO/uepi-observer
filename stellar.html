@@ -2,76 +2,45 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>UEPI 天体観測ログ</title>
+<title>UEPI 研究員応募端末</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body {
   margin:0;
   padding:0;
-  background: radial-gradient(circle at center, #0b0c17, #000010);
+  background:#0b0c17;
   color:#cfd8ff;
-  font-family:'Segoe UI', sans-serif;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  height:100vh;
-  transition: background 0.2s;
+  font-family:sans-serif;
 }
 .container {
-  background: rgba(0,0,40,0.7);
+  max-width:600px;
+  margin:40px auto;
+  background: rgba(10,10,40,0.9);
   padding:30px;
-  border-radius:15px;
-  box-shadow:0 0 30px #223366;
-  text-align:center;
+  border-radius:10px;
+  box-shadow:0 0 20px #223366;
 }
-input {
-  width:80%;
-  padding:10px;
-  margin-top:20px;
-  border-radius:5px;
+h1 { text-align:center; color:#7fbfff; }
+iframe {
+  width:100%;
+  height:1500px;
   border:1px solid #3a4a7a;
-  background:#020b1c;
-  color:#cfd8ff;
-}
-button {
-  margin-top:20px;
-  padding:12px 20px;
-  background:#4a6b5f;
-  color:white;
-  border:none;
   border-radius:5px;
-  cursor:pointer;
+  margin-top:20px;
 }
-button:hover { background:#6aa080; }
 </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>UEPI 天体観測ログ</h1>
-  <p>只今回線状況が安定しておりません。合言葉を入力してください。</p>
+  <h1>UEPI 研究員応募端末</h1>
+  <p>下記フォームに必要事項を入力してください。命の危険等は保証できません。</p>
 
-  <input type="text" id="passcode" placeholder="合言葉">
-  <button onclick="checkPass()">入室</button>
+  <!-- Googleフォーム埋め込み -->
+  <iframe src="コピーしたGoogleフォームURL" frameborder="0" marginheight="0" marginwidth="0">
+    読み込んでいます…
+  </iframe>
 </div>
-
-<script>
-function checkPass() {
-  const code = document.getElementById('passcode').value.trim();
-  if(code === 'UEPISTELLAR-LOG') {
-    // 光ノイズ演出
-    document.body.style.background = "#ffffff";
-    setTimeout(() => {
-      document.body.style.background = "radial-gradient(circle at center, #0b0c17, #000010)";
-      // 応募フォームへ移動
-      window.location.href = 'index.html';
-    }, 150); // 150ms 光る
-  } else {
-    alert('合言葉が間違っています');
-  }
-}
-</script>
 
 </body>
 </html>
