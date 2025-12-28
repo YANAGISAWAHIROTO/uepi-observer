@@ -2,92 +2,59 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>Stellar Observation Log</title>
+<title>天体観測ログ</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body {
+body{
   margin:0;
-  padding:0;
-  background: radial-gradient(circle at center, #0b0c17, #000010);
-  color:#d6e2ff;
-  font-family: "Segoe UI", sans-serif;
+  background:radial-gradient(circle,#0b0c17,#000);
+  color:#cfd8ff;
+  font-family:sans-serif;
   display:flex;
   justify-content:center;
   align-items:center;
   height:100vh;
 }
-.container {
-  background: rgba(5,5,30,0.75);
+.box{
+  background:rgba(0,0,40,.7);
   padding:30px;
-  border-radius:14px;
-  box-shadow:0 0 25px #1a2a55;
-  max-width:420px;
-  width:90%;
+  border-radius:15px;
   text-align:center;
+  box-shadow:0 0 30px #223366;
 }
-h1 {
-  font-size:22px;
-  letter-spacing:1px;
-  margin-bottom:10px;
-}
-p {
-  font-size:14px;
-  opacity:0.85;
-}
-input {
-  width:90%;
+input{
+  width:80%;
   padding:10px;
-  margin-top:18px;
-  border-radius:6px;
-  border:1px solid #3a4a7a;
+  margin-top:15px;
   background:#020b1c;
+  border:1px solid #3a4a7a;
   color:#cfd8ff;
 }
-button {
-  margin-top:18px;
-  padding:10px 22px;
-  background:#3a5f8a;
-  color:white;
+button{
+  margin-top:15px;
+  padding:10px 20px;
+  background:#4a6b5f;
+  color:#fff;
   border:none;
-  border-radius:6px;
-  cursor:pointer;
-}
-button:hover {
-  background:#4d79b0;
-}
-.footer {
-  margin-top:20px;
-  font-size:11px;
-  opacity:0.4;
+  border-radius:5px;
 }
 </style>
 </head>
 <body>
 
-<div class="container">
-  <h1>Stellar Observation Log</h1>
-  <p>
-    現在、観測データの一部に同期制限がかかっています。<br>
-    認証キーを入力してください。
-  </p>
-
-  <input type="password" id="key" placeholder="認証キー">
-  <br>
-  <button onclick="checkKey()">再同期</button>
-
-  <div class="footer">
-    system status : standby
-  </div>
+<div class="box">
+  <h1>天体観測ログ</h1>
+  <p>通信状態が不安定です。<br>確認コードを入力してください。</p>
+  <input id="code" placeholder="確認コード">
+  <button onclick="go()">送信</button>
 </div>
 
 <script>
-function checkKey(){
-  const key = document.getElementById("key").value.trim();
-
-  if(key === "UEPISTELLAR-LOG"){
-    window.location.href = "./stellar.html";
-  } else {
-    alert("認証に失敗しました。");
+function go(){
+  if(document.getElementById("code").value==="UEPISTELLAR-LOG"){
+    location.href="stellar.html";
+  }else{
+    alert("接続できません");
   }
 }
 </script>
