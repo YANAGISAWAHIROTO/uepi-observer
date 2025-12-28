@@ -2,48 +2,93 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>観測許可証</title>
+<title>Observation Permit</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body{
   margin:0;
-  background:#000;
+  background:#050816;
   color:#cfd8ff;
-  font-family:sans-serif;
+  font-family:Segoe UI,sans-serif;
   display:flex;
   justify-content:center;
   align-items:center;
-  height:100vh;
+  min-height:100vh;
 }
 .card{
-  background:#020b1c;
+  width:90%;
+  max-width:420px;
   padding:30px;
-  border-radius:15px;
-  border:2px solid #7fbfff;
-  text-align:center;
-  width:320px;
+  border-radius:18px;
+  background:rgba(10,10,40,.95);
+  border:1px solid #3a4a7a;
+  box-shadow:0 0 35px #223366;
 }
-.id{
+h2{color:#7fbfff;text-align:center}
+.line{margin:12px 0}
+.label{opacity:.6;font-size:12px}
+.value{font-size:16px}
+.status{
+  margin-top:20px;
+  padding:12px;
+  border-radius:10px;
+  background:#331a1a;
+  color:#ffaaaa;
+  text-align:center;
+}
+.approved{
+  background:#1a3324;
+  color:#aaffcc;
+}
+.footer{
   margin-top:15px;
-  padding:10px;
-  border:1px dashed #7fbfff;
+  font-size:11px;
+  text-align:center;
+  opacity:.5;
 }
 </style>
 </head>
 <body>
 
 <div class="card">
-  <h2>観測許可証</h2>
-  <p>識別番号</p>
-  <div class="id" id="pid"></div>
-  <p style="margin-top:15px">Rank : Provisional</p>
+  <h2>OBSERVATION PERMIT</h2>
+
+  <div class="line">
+    <div class="label">識別番号</div>
+    <div class="value" id="uid"></div>
+  </div>
+
+  <div class="line">
+    <div class="label">研究員ランク</div>
+    <div class="value">Unassigned</div>
+  </div>
+
+  <div class="status" id="status">
+    管理者承認待ち
+  </div>
+
+  <div class="footer">permit status : pending</div>
 </div>
 
 <script>
-const p=new URLSearchParams(location.search);
-document.getElementById("pid").textContent=
-p.get("id")||"UNASSIGNED";
+function getParam(n){
+  return new URL(location.href).searchParams.get(n);
+}
+
+const uid = getParam("id");
+document.getElementById("uid").textContent = uid || "N/A";
+
+if(uid){
+  const saved = localStorage.getItem("permit_" + uid);
+  if(saved){
+    const data = JSON.parse(saved);
+    document.querySelectorAll(".value")[1].textContent = data.rank;
+    document.getElementById("status").classList.add("approved");
+    document.getElementById("status").textContent = "承認済 / 観測許可有効";
+    document.querySelector(".footer").textContent = "permit status : approved";
+  }
+}
 </script>
 
 </body>
-  </html>
+    </html>
