@@ -2,65 +2,58 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>Observation Terminal</title>
+<title>UEPI 研究員応募端末</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{
+body {
   margin:0;
-  min-height:100vh;
+  padding:0;
   background:#0b0c17;
   color:#cfd8ff;
-  font-family:Segoe UI,sans-serif;
+  font-family:'Segoe UI', sans-serif;
   display:flex;
   justify-content:center;
-  align-items:center;
+  align-items:flex-start;
+  min-height:100vh;
 }
-.panel{
-  background:rgba(10,10,40,.9);
+.container {
+  background: rgba(10,10,40,0.9);
   padding:30px;
-  border-radius:16px;
+  border-radius:15px;
   box-shadow:0 0 30px #223366;
-  text-align:center;
+  max-width:700px;
   width:90%;
-  max-width:420px;
+  text-align:center;
 }
-.uid{
-  margin:20px 0;
-  font-size:18px;
-  letter-spacing:.1em;
-  color:#7fbfff;
-}
-button{
-  padding:12px 26px;
-  border-radius:10px;
-  border:none;
-  background:#1c2a44;
-  color:#cfd8ff;
-}
+h1 { color:#7fbfff; margin-bottom:20px; }
+iframe { width:100%; height:1500px; border:1px solid #3a4a7a; border-radius:5px; margin-top:20px; }
+#uid { font-weight:bold; margin-top:10px; display:block; }
 </style>
 </head>
 <body>
 
-<div class="panel">
-  <h2>Application Received</h2>
-  <p>個体識別番号が発行されました</p>
+<div class="container">
+  <h1>UEPI 研究員応募端末</h1>
+  <p>下記フォームに必要事項を入力してください。命の危険等は保証できません。</p>
 
-  <div class="uid" id="uid"></div>
+  <!-- UID表示 -->
+  <p>あなたの個体識別番号: <span id="uid"></span></p>
 
-  <button onclick="goPermit()">観測許可証を確認</button>
+  <!-- Googleフォーム埋め込み -->
+  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeOa9Owq-VueF3mYhWNONxTjdV3YGr5H3kp91z_yTOlM6a_cw/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">
+    読み込んでいます…
+  </iframe>
 </div>
 
 <script>
-function genUID(){
-  return "UEPI-" + Math.random().toString(36).substr(2,6).toUpperCase();
+// UID自動生成
+function generateUID() {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let uid = '';
+  for(let i=0;i<6;i++){ uid += chars.charAt(Math.floor(Math.random()*chars.length)); }
+  return uid;
 }
-
-const uid = genUID();
-document.getElementById("uid").textContent = uid;
-
-function goPermit(){
-  location.href = "permit.html?id=" + uid;
-}
+document.getElementById("uid").textContent = generateUID();
 </script>
 
 </body>
