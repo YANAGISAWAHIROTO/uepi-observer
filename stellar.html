@@ -2,69 +2,65 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>観測協力申請</title>
+<title>Observation Terminal</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body{
   margin:0;
+  min-height:100vh;
   background:#0b0c17;
   color:#cfd8ff;
-  font-family:sans-serif;
+  font-family:Segoe UI,sans-serif;
   display:flex;
   justify-content:center;
   align-items:center;
-  min-height:100vh;
 }
-.container{
+.panel{
   background:rgba(10,10,40,.9);
   padding:30px;
-  border-radius:15px;
-  max-width:700px;
-  width:90%;
-  text-align:center;
+  border-radius:16px;
   box-shadow:0 0 30px #223366;
+  text-align:center;
+  width:90%;
+  max-width:420px;
 }
-iframe{
-  width:100%;
-  height:1200px;
-  border:1px solid #3a4a7a;
-  border-radius:5px;
+.uid{
+  margin:20px 0;
+  font-size:18px;
+  letter-spacing:.1em;
+  color:#7fbfff;
 }
-.code{
-  margin:15px 0;
-  padding:10px;
-  background:#020b1c;
-  border:1px dashed #7fbfff;
+button{
+  padding:12px 26px;
+  border-radius:10px;
+  border:none;
+  background:#1c2a44;
+  color:#cfd8ff;
 }
 </style>
 </head>
 <body>
 
-<div class="container">
-  <h2>観測協力申請</h2>
-  <p>以下の識別番号を控えた上で申請してください。</p>
-  <div class="code" id="uid"></div>
+<div class="panel">
+  <h2>Application Received</h2>
+  <p>個体識別番号が発行されました</p>
 
-  <iframe id="formFrame"></iframe>
+  <div class="uid" id="uid"></div>
+
+  <button onclick="goPermit()">観測許可証を確認</button>
 </div>
 
 <script>
-// 個体識別番号生成
-function genID(){
-  const d=new Date();
-  const r=Math.random().toString(36).substring(2,8).toUpperCase();
-  return `OBS-${d.getFullYear()}${d.getMonth()+1}${d.getDate()}-${r}`;
+function genUID(){
+  return "UEPI-" + Math.random().toString(36).substr(2,6).toUpperCase();
 }
-const id=genID();
-document.getElementById("uid").textContent=id;
 
-// ★ GoogleフォームURL（entry番号は後で差し替え）
-const baseFormURL=
-"https://docs.google.com/forms/d/e/1FAIpQLSeOa9Owq-VueF3mYhWNONxTjdV3YGr5H3kp91z_yTOlM6a_cw/viewform?embedded=true";
+const uid = genUID();
+document.getElementById("uid").textContent = uid;
 
-// ↓ entry.XXXXXXXX を自分の番号に置換
-document.getElementById("formFrame").src=
-baseFormURL+"&entry.1234567890="+encodeURIComponent(id);
+function goPermit(){
+  location.href = "permit.html?id=" + uid;
+}
 </script>
 
 </body>
