@@ -2,63 +2,70 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>Restricted Observation Survey</title>
+<title>観測協力申請</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body {
+body{
   margin:0;
-  padding:0;
   background:#0b0c17;
   color:#cfd8ff;
-  font-family:'Segoe UI', sans-serif;
+  font-family:sans-serif;
   display:flex;
   justify-content:center;
   align-items:center;
   min-height:100vh;
 }
-.container {
-  background: rgba(10,10,40,0.9);
+.container{
+  background:rgba(10,10,40,.9);
   padding:30px;
   border-radius:15px;
-  box-shadow:0 0 30px #223366;
-  max-width:760px;
-  width:95%;
+  max-width:700px;
+  width:90%;
   text-align:center;
+  box-shadow:0 0 30px #223366;
 }
-h1 {
-  color:#8fbfff;
-  margin-bottom:10px;
-}
-p {
-  font-size:14px;
-  opacity:0.85;
-}
-iframe {
+iframe{
   width:100%;
-  height:1400px;
+  height:1200px;
   border:1px solid #3a4a7a;
-  border-radius:6px;
-  margin-top:20px;
+  border-radius:5px;
+}
+.code{
+  margin:15px 0;
+  padding:10px;
+  background:#020b1c;
+  border:1px dashed #7fbfff;
 }
 </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>Extended Observation Survey</h1>
-  <p>
-    以下の調査は特定条件下でのみ使用されます。<br>
-    正確に回答してください。
-  </p>
+  <h2>観測協力申請</h2>
+  <p>以下の識別番号を控えた上で申請してください。</p>
+  <div class="code" id="uid"></div>
 
-  <iframe
-    src="https://docs.google.com/forms/d/e/1FAIpQLSeOa9Owq-VueF3mYhWNONxTjdV3YGr5H3kp91z_yTOlM6a_cw/viewform?embedded=true"
-    frameborder="0"
-    marginheight="0"
-    marginwidth="0">
-    読み込んでいます…
-  </iframe>
+  <iframe id="formFrame"></iframe>
 </div>
+
+<script>
+// 個体識別番号生成
+function genID(){
+  const d=new Date();
+  const r=Math.random().toString(36).substring(2,8).toUpperCase();
+  return `OBS-${d.getFullYear()}${d.getMonth()+1}${d.getDate()}-${r}`;
+}
+const id=genID();
+document.getElementById("uid").textContent=id;
+
+// ★ GoogleフォームURL（entry番号は後で差し替え）
+const baseFormURL=
+"https://docs.google.com/forms/d/e/1FAIpQLSeOa9Owq-VueF3mYhWNONxTjdV3YGr5H3kp91z_yTOlM6a_cw/viewform?embedded=true";
+
+// ↓ entry.XXXXXXXX を自分の番号に置換
+document.getElementById("formFrame").src=
+baseFormURL+"&entry.1234567890="+encodeURIComponent(id);
+</script>
 
 </body>
 </html>
