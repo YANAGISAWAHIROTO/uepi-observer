@@ -2,10 +2,10 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>UEPI 観測許可証</title>
+<title>観測許可証</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body { margin:0; padding:0; background:#0b0c17; color:#cfd8ff; font-family:'Segoe UI', sans-serif; display:flex; justify-content:center; align-items:center; min-height:100vh; }
+body { margin:0; padding:0; background: radial-gradient(circle,#0b0c17,#000010); color:#cfd8ff; font-family:'Segoe UI',sans-serif; display:flex; justify-content:center; align-items:center; min-height:100vh; }
 .container { background: rgba(10,10,40,0.9); padding:30px; border-radius:15px; box-shadow:0 0 30px #223366; max-width:500px; width:90%; text-align:center; }
 h1 { color:#7fbfff; margin-bottom:20px; }
 .value { font-weight:bold; }
@@ -16,10 +16,9 @@ h1 { color:#7fbfff; margin-bottom:20px; }
 <div class="container">
   <h1>観測許可証</h1>
   <p>個体識別番号: <span id="uid"></span></p>
-  <p>研究員ランク: <span class="value"></span></p>
+  <p>ランク: <span class="value"></span></p>
   <p>承認状況: <span class="value"></span></p>
-  <div class="status">承認待ちです。</div>
-  <div class="footer" style="margin-top:20px;"></div>
+  <div class="status"></div>
 </div>
 
 <script>
@@ -27,17 +26,19 @@ function getParam(name){
   const url = new URL(window.location.href);
   return url.searchParams.get(name);
 }
+
 const uid = getParam("id");
 const uidEl = document.getElementById("uid");
+
 if(uid){
   uidEl.textContent = uid;
   const saved = localStorage.getItem("permit_" + uid);
   if(saved){
     const data = JSON.parse(saved);
     document.querySelectorAll(".value")[0].textContent = data.rank;
-    document.querySelectorAll(".value")[1].textContent = data.status === "approved" ? "Approved" : "Rejected";
-    document.querySelector(".status").innerHTML = data.status === "approved" ? "管理者により承認されました。<br>観測活動が許可されています。" : "承認が却下されました。";
-    document.querySelector(".footer").textContent = "permit status : " + data.status;
+    document.querySelectorAll(".value")[1].textContent = "Approved";
+    document.querySelector(".status").innerHTML =
+      "管理者により承認されました。<br>観測活動が許可されています。";
   }
 }else{
   uidEl.textContent = "識別番号なし";
