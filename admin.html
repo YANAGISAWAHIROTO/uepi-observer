@@ -2,53 +2,40 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>UEPI 管理者用フォーム</title>
+<title>管理者用フォーム</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body { margin:0; padding:0; background:#0b0c17; color:#cfd8ff; font-family:'Segoe UI', sans-serif; display:flex; justify-content:center; align-items:center; min-height:100vh; }
-.container { background: rgba(10,10,40,0.9); padding:30px; border-radius:15px; box-shadow:0 0 30px #223366; max-width:500px; width:90%; text-align:center; }
+body { margin:0; padding:20px; background:#0b0c17; color:#cfd8ff; font-family:'Segoe UI',sans-serif; }
 h1 { color:#7fbfff; margin-bottom:20px; }
-label { display:block; text-align:left; margin-top:15px; font-weight:bold; }
-input, select { width:100%; padding:10px; margin-top:5px; border-radius:5px; border:1px solid #3a4a7a; background:#020b1c; color:#cfd8ff; font-size:14px; }
-button { margin-top:20px; width:100%; padding:12px; font-size:16px; background:#4a6b5f; color:white; border:none; border-radius:5px; cursor:pointer; }
+input, select, button { margin-top:10px; padding:8px; border-radius:5px; border:1px solid #3a4a7a; background:#020b1c; color:#cfd8ff; width:100%; }
+button { background:#4a6b5f; cursor:pointer; }
 button:hover { background:#6aa080; }
-.success { margin-top:20px; color:#aaffaa; font-weight:bold; display:none; }
 </style>
 </head>
 <body>
-<div class="container">
-  <h1>管理者用フォーム</h1>
-  <label>応募者 UID</label>
-  <input type="text" id="uid" placeholder="例: 123ABC">
-  <label>承認ステータス</label>
-  <select id="status">
-    <option value="">選択してください</option>
-    <option value="approved">承認</option>
-    <option value="rejected">却下</option>
-  </select>
-  <label>研究員ランク</label>
-  <select id="rank">
-    <option value="">選択してください</option>
-    <option value="Novice">Novice</option>
-    <option value="Intermediate">Intermediate</option>
-    <option value="Advanced">Advanced</option>
-  </select>
-  <button onclick="submitAdmin()">送信</button>
-  <div class="success" id="success">データが保存されました。</div>
-</div>
+<h1>管理者用フォーム</h1>
+<p>応募者のUIDとランクを入力して承認します。</p>
+
+<label>UID</label>
+<input type="text" id="uid">
+
+<label>ランク</label>
+<select id="rank">
+  <option value="初級">初級</option>
+  <option value="中級">中級</option>
+  <option value="上級">上級</option>
+</select>
+
+<button onclick="approve()">承認</button>
 
 <script>
-function submitAdmin(){
+function approve(){
   const uid = document.getElementById("uid").value.trim();
-  const status = document.getElementById("status").value;
   const rank = document.getElementById("rank").value;
-  if(!uid || !status || !rank){ alert("すべての項目を入力してください。"); return; }
-  const data = { status, rank };
-  localStorage.setItem("permit_" + uid, JSON.stringify(data));
-  document.getElementById("success").style.display = "block";
-  document.getElementById("uid").value = "";
-  document.getElementById("status").value = "";
-  document.getElementById("rank").value = "";
+  if(!uid || !rank){ alert("UIDとランクを入力してください"); return; }
+
+  localStorage.setItem("permit_" + uid, JSON.stringify({rank: rank}));
+  alert("承認完了: " + uid + " にランク " + rank + " を付与しました");
 }
 </script>
 </body>
