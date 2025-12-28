@@ -8,12 +8,12 @@
 body {
   margin:0;
   padding:0;
-  background:#0b0c17;
+  background: radial-gradient(circle at center, #0b0c17, #000010);
   color:#cfd8ff;
   font-family:'Segoe UI', sans-serif;
   display:flex;
   justify-content:center;
-  align-items:flex-start;
+  align-items:center;
   min-height:100vh;
 }
 .container {
@@ -26,34 +26,67 @@ body {
   text-align:center;
 }
 h1 { color:#7fbfff; margin-bottom:20px; }
-iframe { width:100%; height:1500px; border:1px solid #3a4a7a; border-radius:5px; margin-top:20px; }
-#uid { font-weight:bold; margin-top:10px; display:block; }
+iframe {
+  width:100%;
+  height:1500px;
+  border:1px solid #3a4a7a;
+  border-radius:5px;
+  margin-top:20px;
+}
+.success {
+  display:none;
+  margin-top:20px;
+  padding:15px;
+  background:#223322;
+  border-radius:5px;
+  text-align:center;
+  color:#aaffaa;
+  font-weight:bold;
+}
 </style>
 </head>
 <body>
 
 <div class="container">
   <h1>UEPI 研究員応募端末</h1>
-  <p>下記フォームに必要事項を入力してください。命の危険等は保証できません。</p>
+  <p>必要事項を入力してください。命の危険等は保証できません。</p>
 
-  <!-- UID表示 -->
-  <p>あなたの個体識別番号: <span id="uid"></span></p>
-
-  <!-- Googleフォーム埋め込み -->
-  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeOa9Owq-VueF3mYhWNONxTjdV3YGr5H3kp91z_yTOlM6a_cw/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">
+  <iframe id="googleForm" 
+    src="https://docs.google.com/forms/d/e/1FAIpQLSeOa9Owq-VueF3mYhWNONxTjdV3YGr5H3kp91z_yTOlM6a_cw/viewform?usp=pp_url" 
+    frameborder="0" marginheight="0" marginwidth="0">
     読み込んでいます…
   </iframe>
+
+  <div class="success" id="success">応募完了。管理者による承認をお待ちください。</div>
 </div>
 
 <script>
 // UID自動生成
 function generateUID() {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let uid = '';
-  for(let i=0;i<6;i++){ uid += chars.charAt(Math.floor(Math.random()*chars.length)); }
-  return uid;
+  return 'UEPI-' + Math.random().toString(36).substring(2,10).toUpperCase();
 }
-document.getElementById("uid").textContent = generateUID();
+
+const uid = generateUID();
+
+// Googleフォーム iframe に UID を付加
+const formIframe = document.getElementById('googleForm');
+// entry.1234567890 は Googleフォームで UID 用質問のIDに置き換える
+formIframe.src = "https://docs.google.com/forms/d/e/1FAIpQLSeOa9Owq-VueF3mYhWNONxTjdV3YGr5H3kp91z_yTOlM6a_cw/viewform?usp=pp_url&entry.1234567890=" + encodeURIComponent(uid);
+
+// 管理者用フォームに自動送信（簡易版）
+function sendToAdmin(name, rank) {
+  // entry.1111111111, entry.2222222222 などは管理者用フォームの質問IDに置き換える
+  const adminURL = "https://docs.google.com/forms/d/e/管理者用フォームID/formResponse" +
+    "?entry.1111111111=" + encodeURIComponent(name) +
+    "&entry.2222222222=" + encodeURIComponent(rank) +
+    "&entry.3333333333=" + encodeURIComponent(uid);
+  
+  // 画像を使った非表示送信
+  const img = new Image();
+  img.src = adminURL;
+}
+
+// フォーム送信完了を検出して管理者へ送信（iframe内なので難易度高め、確認後手動送信でも可）
 </script>
 
 </body>
