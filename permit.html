@@ -2,93 +2,46 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>Observation Permit</title>
+<title>UEPI 観測許可証</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{
-  margin:0;
-  background:#050816;
-  color:#cfd8ff;
-  font-family:Segoe UI,sans-serif;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:100vh;
-}
-.card{
-  width:90%;
-  max-width:420px;
-  padding:30px;
-  border-radius:18px;
-  background:rgba(10,10,40,.95);
-  border:1px solid #3a4a7a;
-  box-shadow:0 0 35px #223366;
-}
-h2{color:#7fbfff;text-align:center}
-.line{margin:12px 0}
-.label{opacity:.6;font-size:12px}
-.value{font-size:16px}
-.status{
-  margin-top:20px;
-  padding:12px;
-  border-radius:10px;
-  background:#331a1a;
-  color:#ffaaaa;
-  text-align:center;
-}
-.approved{
-  background:#1a3324;
-  color:#aaffcc;
-}
-.footer{
-  margin-top:15px;
-  font-size:11px;
-  text-align:center;
-  opacity:.5;
-}
+body { margin:0; padding:0; background:#0b0c17; color:#cfd8ff; font-family:'Segoe UI', sans-serif; display:flex; justify-content:center; align-items:center; min-height:100vh; }
+.container { background: rgba(10,10,40,0.9); padding:30px; border-radius:15px; box-shadow:0 0 30px #223366; max-width:500px; width:90%; text-align:center; }
+h1 { color:#7fbfff; margin-bottom:20px; }
+.value { font-weight:bold; }
+.status { margin-top:15px; }
 </style>
 </head>
 <body>
-
-<div class="card">
-  <h2>OBSERVATION PERMIT</h2>
-
-  <div class="line">
-    <div class="label">識別番号</div>
-    <div class="value" id="uid"></div>
-  </div>
-
-  <div class="line">
-    <div class="label">研究員ランク</div>
-    <div class="value">Unassigned</div>
-  </div>
-
-  <div class="status" id="status">
-    管理者承認待ち
-  </div>
-
-  <div class="footer">permit status : pending</div>
+<div class="container">
+  <h1>観測許可証</h1>
+  <p>個体識別番号: <span id="uid"></span></p>
+  <p>研究員ランク: <span class="value"></span></p>
+  <p>承認状況: <span class="value"></span></p>
+  <div class="status">承認待ちです。</div>
+  <div class="footer" style="margin-top:20px;"></div>
 </div>
 
 <script>
-function getParam(n){
-  return new URL(location.href).searchParams.get(n);
+function getParam(name){
+  const url = new URL(window.location.href);
+  return url.searchParams.get(name);
 }
-
 const uid = getParam("id");
-document.getElementById("uid").textContent = uid || "N/A";
-
+const uidEl = document.getElementById("uid");
 if(uid){
+  uidEl.textContent = uid;
   const saved = localStorage.getItem("permit_" + uid);
   if(saved){
     const data = JSON.parse(saved);
-    document.querySelectorAll(".value")[1].textContent = data.rank;
-    document.getElementById("status").classList.add("approved");
-    document.getElementById("status").textContent = "承認済 / 観測許可有効";
-    document.querySelector(".footer").textContent = "permit status : approved";
+    document.querySelectorAll(".value")[0].textContent = data.rank;
+    document.querySelectorAll(".value")[1].textContent = data.status === "approved" ? "Approved" : "Rejected";
+    document.querySelector(".status").innerHTML = data.status === "approved" ? "管理者により承認されました。<br>観測活動が許可されています。" : "承認が却下されました。";
+    document.querySelector(".footer").textContent = "permit status : " + data.status;
   }
+}else{
+  uidEl.textContent = "識別番号なし";
 }
 </script>
-
 </body>
-    </html>
+</html>
