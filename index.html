@@ -2,62 +2,65 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>天体観測ログ</title>
+<title>Stellar Observation Log</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body{
   margin:0;
-  background:radial-gradient(circle,#0b0c17,#000);
-  color:#cfd8ff;
-  font-family:sans-serif;
+  height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  height:100vh;
+  background:radial-gradient(circle,#0b0c17,#000010);
+  color:#cfd8ff;
+  font-family:Segoe UI,sans-serif;
 }
 .box{
   background:rgba(0,0,40,.7);
-  padding:30px;
-  border-radius:15px;
+  padding:35px;
+  border-radius:18px;
   text-align:center;
   box-shadow:0 0 30px #223366;
 }
 input{
   width:80%;
   padding:10px;
-  margin-top:15px;
-  background:#020b1c;
+  margin-top:20px;
+  border-radius:6px;
   border:1px solid #3a4a7a;
+  background:#020b1c;
   color:#cfd8ff;
 }
 button{
-  margin-top:15px;
-  padding:10px 20px;
-  background:#4a6b5f;
-  color:#fff;
+  margin-top:20px;
+  padding:10px 24px;
   border:none;
-  border-radius:5px;
+  border-radius:6px;
+  background:#4a6b5f;
+  color:white;
 }
 </style>
 </head>
 <body>
 
 <div class="box">
-  <h1>天体観測ログ</h1>
-  <p>通信状態が不安定です。<br>確認コードを入力してください。</p>
-  <input id="code" placeholder="確認コード">
-  <button onclick="go()">送信</button>
+  <h2>Network Status</h2>
+  <p>通信状態を確認しています…</p>
+
+  <input id="key" placeholder="system keyword">
+  <br>
+  <button onclick="enter()">continue</button>
 </div>
 
 <script>
-function go(){
-  if(document.getElementById("code").value==="UEPISTELLAR-LOG"){
+function enter(){
+  if(document.getElementById("key").value === "UEPISTELLAR-LOG"){
     location.href="stellar.html";
   }else{
-    alert("接続できません");
+    alert("connection failed");
   }
 }
 </script>
 
 </body>
-</html>
+    </html>
