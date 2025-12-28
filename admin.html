@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Admin Console</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+  margin:0;
+  background:#050816;
+  color:#cfd8ff;
+  font-family:Segoe UI,sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+.panel{
+  background:rgba(10,10,40,.95);
+  padding:30px;
+  border-radius:18px;
+  box-shadow:0 0 30px #223366;
+  width:90%;
+  max-width:420px;
+}
+input,select{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  background:#020b1c;
+  border:1px solid #3a4a7a;
+  color:#cfd8ff;
+  border-radius:8px;
+}
+button{
+  width:100%;
+  margin-top:20px;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:#4a6b5f;
+  color:white;
+}
+</style>
+</head>
+<body>
+
+<div class="panel">
+  <h2>ADMIN CONSOLE</h2>
+
+  <input id="uid" placeholder="個体識別番号">
+  <select id="rank">
+    <option value="">ランク選択</option>
+    <option>Observer</option>
+    <option>Field Agent</option>
+    <option>Analyst</option>
+    <option>Operative</option>
+    <option>Exalted</option>
+  </select>
+
+  <button onclick="approve()">承認</button>
+</div>
+
+<script>
+function approve(){
+  const uid = uid.value.trim();
+  const rank = rank.value;
+  if(!uid||!rank){alert("未入力");return;}
+  localStorage.setItem("permit_"+uid,JSON.stringify({
+    rank:rank,
+    approved:true,
+    time:new Date().toISOString()
+  }));
+  alert("承認完了");
+}
+</script>
+
+</body>
+</html>
