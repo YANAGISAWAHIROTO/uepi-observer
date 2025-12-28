@@ -2,78 +2,54 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>Admin Console</title>
+<title>UEPI 管理者用フォーム</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{
-  margin:0;
-  background:#050816;
-  color:#cfd8ff;
-  font-family:Segoe UI,sans-serif;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:100vh;
-}
-.panel{
-  background:rgba(10,10,40,.95);
-  padding:30px;
-  border-radius:18px;
-  box-shadow:0 0 30px #223366;
-  width:90%;
-  max-width:420px;
-}
-input,select{
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  background:#020b1c;
-  border:1px solid #3a4a7a;
-  color:#cfd8ff;
-  border-radius:8px;
-}
-button{
-  width:100%;
-  margin-top:20px;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  background:#4a6b5f;
-  color:white;
-}
+body { margin:0; padding:0; background:#0b0c17; color:#cfd8ff; font-family:'Segoe UI', sans-serif; display:flex; justify-content:center; align-items:center; min-height:100vh; }
+.container { background: rgba(10,10,40,0.9); padding:30px; border-radius:15px; box-shadow:0 0 30px #223366; max-width:500px; width:90%; text-align:center; }
+h1 { color:#7fbfff; margin-bottom:20px; }
+label { display:block; text-align:left; margin-top:15px; font-weight:bold; }
+input, select { width:100%; padding:10px; margin-top:5px; border-radius:5px; border:1px solid #3a4a7a; background:#020b1c; color:#cfd8ff; font-size:14px; }
+button { margin-top:20px; width:100%; padding:12px; font-size:16px; background:#4a6b5f; color:white; border:none; border-radius:5px; cursor:pointer; }
+button:hover { background:#6aa080; }
+.success { margin-top:20px; color:#aaffaa; font-weight:bold; display:none; }
 </style>
 </head>
 <body>
-
-<div class="panel">
-  <h2>ADMIN CONSOLE</h2>
-
-  <input id="uid" placeholder="個体識別番号">
-  <select id="rank">
-    <option value="">ランク選択</option>
-    <option>Observer</option>
-    <option>Field Agent</option>
-    <option>Analyst</option>
-    <option>Operative</option>
-    <option>Exalted</option>
+<div class="container">
+  <h1>管理者用フォーム</h1>
+  <label>応募者 UID</label>
+  <input type="text" id="uid" placeholder="例: 123ABC">
+  <label>承認ステータス</label>
+  <select id="status">
+    <option value="">選択してください</option>
+    <option value="approved">承認</option>
+    <option value="rejected">却下</option>
   </select>
-
-  <button onclick="approve()">承認</button>
+  <label>研究員ランク</label>
+  <select id="rank">
+    <option value="">選択してください</option>
+    <option value="Novice">Novice</option>
+    <option value="Intermediate">Intermediate</option>
+    <option value="Advanced">Advanced</option>
+  </select>
+  <button onclick="submitAdmin()">送信</button>
+  <div class="success" id="success">データが保存されました。</div>
 </div>
 
 <script>
-function approve(){
-  const uid = uid.value.trim();
-  const rank = rank.value;
-  if(!uid||!rank){alert("未入力");return;}
-  localStorage.setItem("permit_"+uid,JSON.stringify({
-    rank:rank,
-    approved:true,
-    time:new Date().toISOString()
-  }));
-  alert("承認完了");
+function submitAdmin(){
+  const uid = document.getElementById("uid").value.trim();
+  const status = document.getElementById("status").value;
+  const rank = document.getElementById("rank").value;
+  if(!uid || !status || !rank){ alert("すべての項目を入力してください。"); return; }
+  const data = { status, rank };
+  localStorage.setItem("permit_" + uid, JSON.stringify(data));
+  document.getElementById("success").style.display = "block";
+  document.getElementById("uid").value = "";
+  document.getElementById("status").value = "";
+  document.getElementById("rank").value = "";
 }
 </script>
-
 </body>
 </html>
