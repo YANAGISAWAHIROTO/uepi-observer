@@ -2,65 +2,69 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>Stellar Observation Log</title>
+<title>天体観測ログ</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{
+body {
   margin:0;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:radial-gradient(circle,#0b0c17,#000010);
+  padding:0;
+  background: radial-gradient(circle at center, #0b0c17, #000010);
   color:#cfd8ff;
-  font-family:Segoe UI,sans-serif;
+  font-family:'Segoe UI', sans-serif;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
 }
-.box{
-  background:rgba(0,0,40,.7);
-  padding:35px;
-  border-radius:18px;
-  text-align:center;
+.container {
+  background: rgba(0,0,40,0.7);
+  padding:30px;
+  border-radius:15px;
   box-shadow:0 0 30px #223366;
+  text-align:center;
 }
-input{
+input {
   width:80%;
   padding:10px;
   margin-top:20px;
-  border-radius:6px;
+  border-radius:5px;
   border:1px solid #3a4a7a;
   background:#020b1c;
   color:#cfd8ff;
 }
-button{
+button {
   margin-top:20px;
-  padding:10px 24px;
-  border:none;
-  border-radius:6px;
+  padding:12px 20px;
   background:#4a6b5f;
   color:white;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
 }
+button:hover { background:#6aa080; }
 </style>
 </head>
 <body>
 
-<div class="box">
-  <h2>Network Status</h2>
-  <p>通信状態を確認しています…</p>
+<div class="container">
+  <h1>天体観測ログ</h1>
+  <p>只今回線状況が安定しておりません。合言葉を入力してください。</p>
 
-  <input id="key" placeholder="system keyword">
-  <br>
-  <button onclick="enter()">continue</button>
+  <input type="text" id="passcode" placeholder="合言葉">
+  <button onclick="checkPass()">入室</button>
 </div>
 
 <script>
-function enter(){
-  if(document.getElementById("key").value === "UEPISTELLAR-LOG"){
-    location.href="stellar.html";
-  }else{
-    alert("connection failed");
+function checkPass() {
+  const code = document.getElementById('passcode').value.trim();
+  if(code === 'UEPISTELLAR-LOG') {
+    window.location.href = 'stellar.html';
+  } else {
+    alert('合言葉が間違っています');
   }
 }
 </script>
 
 </body>
-    </html>
+</html>
