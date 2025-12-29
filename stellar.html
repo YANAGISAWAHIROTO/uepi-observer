@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>天体観測ログ</title>
+<title>UEPI 研究員応募端末</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body {
@@ -12,55 +12,79 @@ body {
   color:#cfd8ff;
   font-family:'Segoe UI', sans-serif;
   display:flex;
-  flex-direction:column;
-  align-items:center;
   justify-content:center;
-  height:100vh;
+  align-items:center;
+  min-height:100vh;
 }
 .container {
-  background: rgba(0,0,40,0.7);
+  background: rgba(10,10,40,0.9);
   padding:30px;
   border-radius:15px;
   box-shadow:0 0 30px #223366;
+  max-width:720px;
+  width:90%;
   text-align:center;
 }
-input {
-  width:80%;
-  padding:10px;
-  margin-top:20px;
-  border-radius:5px;
+h1 { color:#7fbfff; margin-bottom:15px; }
+#uidDisplay {
+  margin-top:10px;
+  font-size:16px;
+  font-weight:bold;
+  color:#aaffaa;
+}
+iframe {
+  width:100%;
+  height:1500px;
   border:1px solid #3a4a7a;
-  background:#020b1c;
-  color:#cfd8ff;
-}
-button {
-  margin-top:20px;
-  padding:12px 20px;
-  background:#4a6b5f;
-  color:white;
-  border:none;
   border-radius:5px;
-  cursor:pointer;
+  margin-top:20px;
 }
-button:hover { background:#6aa080; }
 </style>
 </head>
 <body>
+
 <div class="container">
-  <h1>天体観測ログ</h1>
-  <p>回線状況が安定していません。観測記録用端末にアクセスするにはパスコードを入力してください。</p>
-  <input type="text" id="passcode" placeholder="パスコード">
-  <button onclick="checkPass()">入室</button>
+  <h1>UEPI 研究員応募端末</h1>
+  <p>下記フォームに必要事項を入力してください。命の危険等は保証できません。</p>
+
+  <!-- UID 表示 -->
+  <div id="uidDisplay"></div>
+
+  <!-- 埋め込み Google フォーム -->
+  <iframe id="googleForm"
+    src="https://docs.google.com/forms/d/e/1FAIpQLSeOa9Owq-VueF3mYhWNONxTjdV3YGr5H3kp91z_yTOlM6a_cw/viewform?usp=pp_url"
+    frameborder="0" marginheight="0" marginwidth="0">
+    読み込んでいます…
+  </iframe>
 </div>
+
 <script>
-function checkPass() {
-  const code = document.getElementById('passcode').value.trim();
-  if(code === 'UEPISTELLAR-LOG') {
-    window.location.href = 'form.html'; // 合言葉が正しければ応募フォームへ
-  } else {
-    alert('パスコードが間違っています');
+// UID を生成する関数
+function generateUID() {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let result = "UEPI-";
+  for(let i = 0; i < 8; i++){
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
   }
+  return result;
 }
+
+const uid = generateUID();
+
+// UID をページに表示
+document.getElementById("uidDisplay").textContent = "あなたのUID：" + uid;
+
+// Google フォームの URL に UID を埋め込む
+const formIframe = document.getElementById("googleForm");
+
+// Google フォームの base URL（質問ID含む）
+const baseURL = "https://docs.google.com/forms/d/e/1FAIpQLSeOa9Owq-VueF3mYhWNONxTjdV3YGr5H3kp91z_yTOlM6a_cw/viewform?usp=pp_url";
+
+// entry.694208163 は UID 用の欄の質問ID
+const uidField = "entry.694208163";
+
+formIframe.src = baseURL + "&" + uidField + "=" + encodeURIComponent(uid);
 </script>
+
 </body>
 </html>
